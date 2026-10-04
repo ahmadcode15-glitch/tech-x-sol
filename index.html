@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="texhxsol icon.png">
+  <title>Tech X Sol | Software, Web, Mobile & Digital Solutions</title>
+  
+  <!-- Modern Clean Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <style>
+    :root {
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F8FAFC;
+      --bg-card: #FFFFFF;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --accent-cyan: #00A8E8;
+      --accent-glow: #00C8FF;
+      --accent-dark: #0077B6;
+      --border-color: #E2E8F0;
+      --border-hover: #00A8E8;
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 168, 232, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+      --radius: 16px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Custom Dual Cursor */
+    .cursor-dot, .cursor-outline {
+      pointer-events: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      z-index: 9999;
+      transition: opacity 0.3s ease;
+    }
+    .cursor-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent-cyan);
+    }
+    .cursor-outline {
+      width: 32px;
+      height: 32px;
+      border: 2px solid var(--accent-cyan);
+      transition: width 0.2s ease, height 0.2s ease, transform 0.15s ease-out;
+    }
+
+    /* Header & Navigation */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      margin-top: -15px;
+      margin-bottom: -20px;
+      margin-left: -38px;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+
+    .logo-brand {
+      transition: transform 0.25s ease;
+    }
+
+    .logo-brand:hover {
+      transform: translateY(-1px);
+    }
+
+    .logo-svg-wrapper {
+      width: 300px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.4s ease;
+    }
+
+    .logo-svg-wrapper img {
+      width: 300px;
+      height: auto;
+      max-height: 100px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .logo-brand:hover .logo-svg-wrapper {
+      transform: scale(1.03);
+    }
+
+    .brand-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .brand-text span.x-node {
+      color: var(--accent-cyan);
+      font-weight: 800;
+      animation: pulseGlow 2s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% { text-shadow: 0 0 2px rgba(0,168,232,0.2); }
+      100% { text-shadow: 0 0 10px rgba(0,200,255,0.8); }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 15px;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-cyan);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-dark));
+      color: #FFFFFF !important;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-weight: 600;
+      box-shadow: 0 4px 14px rgba(0, 168, 232, 0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 168, 232, 0.4);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background-color: var(--text-main);
+      border-radius: 2px;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 160px 24px 100px;
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 40px;
+      align-items: center;
+      min-height: 90vh;
+    }
+
+    .hero-content h1 {
+      font-size: 56px;
+      line-height: 1.15;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 20px;
+      letter-spacing: -1.5px;
+    }
+
+    .hero-content h1 span.highlight {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-slogan {
+      display: inline-block;
+      padding: 8px 18px;
+      background: rgba(0, 168, 232, 0.08);
+      border: 1px solid rgba(0, 168, 232, 0.25);
+      border-radius: 30px;
+      color: var(--accent-dark);
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 24px;
+      letter-spacing: 0.5px;
+      animation: floatBadge 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatBadge {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-8px); }
+    }
+
+    .hero-content p {
+      font-size: 18px;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+      max-width: 540px;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .btn-secondary {
+      padding: 12px 26px;
+      border-radius: 50px;
+      border: 2px solid var(--border-color);
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+    }
+
+    /* 3D Canvas Container */
+    .hero-3d-wrapper {
+      position: relative;
+      width: 100%;
+      height: 480px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #three-canvas {
+      width: 100%;
+      height: 100%;
+      border-radius: var(--radius);
+    }
+
+    /* Universal Scroll Reveal Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(35px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Services Section */
+    .services-section {
+      padding: 100px 24px;
+      background-color: var(--bg-secondary);
+    }
+
+    .section-title {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 60px;
+    }
+
+    .section-title h2 {
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+
+    .section-title p {
+      color: var(--text-muted);
+      font-size: 16px;
+    }
+
+    .services-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 28px;
+    }
+
+    .service-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 36px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-glow));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent-cyan);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-icon {
+      width: 60px;
+      height: 60px;
+      background: rgba(0, 168, 232, 0.1);
+      color: var(--accent-cyan);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 24px;
+      transition: transform 0.4s ease, background 0.4s ease;
+    }
+
+    .service-card:hover .service-icon {
+      transform: scale(1.1) rotate(-6deg);
+      background: var(--accent-cyan);
+      color: #FFFFFF;
+    }
+
+    .service-card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .service-card p {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .service-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .service-tag {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      background: rgba(0, 168, 232, 0.08);
+      color: var(--accent-dark);
+      border-radius: 20px;
+    }
+
+    /* Founders Section */
+    .founders-section {
+      padding: 100px 24px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .founders-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      margin-top: 40px;
+    }
+
+    .founder-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 36px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: all 0.4s ease;
+    }
+
+    .founder-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent-cyan);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .founder-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 20px rgba(0, 168, 232, 0.25);
+      transition: transform 0.3s ease;
+    }
+
+    .founder-card:hover .founder-avatar {
+      transform: scale(1.08);
+    }
+
+    .founder-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .founder-role {
+      color: var(--accent-cyan);
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .founder-bio {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    /* Social Media Icons for Founders */
+    .founder-socials {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .founder-socials a {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .founder-socials a:hover {
+      background: var(--accent-cyan);
+      color: #FFFFFF;
+      border-color: var(--accent-cyan);
+      transform: translateY(-3px);
+    }
+
+    /* WhatsApp Community Section */
+    .community-section {
+      padding: 80px 24px;
+      background: linear-gradient(135deg, #0F172A, #1E293B);
+      color: #FFFFFF;
+      border-radius: 24px;
+      max-width: 1280px;
+      margin: 40px auto 80px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
+    }
+
+    .community-section h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .community-section p {
+      color: #94A3B8;
+      max-width: 600px;
+      margin: 0 auto 32px;
+      font-size: 16px;
+    }
+
+    .btn-whatsapp {
+      background: #25D366;
+      color: #FFFFFF;
+      padding: 14px 34px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-whatsapp:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 8px 28px rgba(37, 211, 102, 0.5);
+    }
+
+    /* Contact Us Section */
+    .contact-section {
+      padding: 100px 24px;
+      background-color: var(--bg-secondary);
+    }
+
+    .contact-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+
+    .contact-info h3 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .contact-info p {
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      font-size: 16px;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .contact-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(0, 168, 232, 0.1);
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .contact-item h4 {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .contact-item p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .contact-form {
+      background: #FFFFFF;
+      padding: 36px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--accent-cyan);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-dark));
+      color: #FFFFFF;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 168, 232, 0.4);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 60px 24px 30px;
+      background-color: #FFFFFF;
+    }
+
+    .footer-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-copy {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 992px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 120px;
+        text-align: center;
+      }
+      .hero-content p {
+        margin: 0 auto 32px;
+      }
+      .hero-btns {
+        justify-content: center;
+      }
+      .hero-3d-wrapper {
+        height: 380px;
+      }
+      .contact-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .logo-svg-wrapper {
+        width: 112px;
+        height: 38px;
+      }
+
+      .logo-svg-wrapper img {
+        width: 112px;
+        max-height: 38px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+      .hero-content h1 {
+        font-size: 38px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo-svg-wrapper {
+        width: 212px;
+        height: 48px;
+        padding: 33px;
+        margin-left: -22px;
+      }
+      .logo-svg-wrapper img {
+        width: 462px;
+        max-height: 68px;
+      }
+    }
+
+    @media (max-width: 350px){
+      .nav-container{
+        margin-top: 20px;
+      }
+
+    }
+
+    /* Single Floating Share Button */
+    .floating-share {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      width: 52px;
+      height: 52px;
+      border: none;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-dark));
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 1500;
+      box-shadow: 0 10px 25px rgba(0, 168, 232, 0.32);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      animation: shareFloat 3s ease-in-out infinite;
+    }
+
+    .floating-share:hover {
+      transform: translateY(-4px) scale(1.06);
+      box-shadow: 0 14px 30px rgba(0, 168, 232, 0.45);
+    }
+
+    .floating-share:active {
+      transform: scale(0.94);
+    }
+
+    @keyframes shareFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .share-toast {
+      position: fixed;
+      left: 50%;
+      bottom: 90px;
+      transform: translateX(-50%) translateY(15px);
+      background: #0F172A;
+      color: #FFFFFF;
+      padding: 10px 16px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1501;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .share-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      .floating-share {
+        width: 46px;
+        height: 46px;
+        right: 16px;
+        bottom: 16px;
+        font-size: 18px;
+      }
+    }
+
+    .footer-socials {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-socials a {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--text-muted);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.footer-socials a:hover {
+    color: #FFFFFF;
+    background: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+    transform: translateY(-4px);
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    gap: 20px;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.98);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  }
+
+  .nav-links.mobile-active {
+    display: flex;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-outline"></div>
+
+  <!-- Header / Navigation -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="logo-brand">
+        <div class="logo-svg-wrapper">
+          <img src="techxsol logo.png" alt="Tech X Sol Logo">
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#founders">Leadership</a></li>
+        <li><a href="#community">Community</a></li>
+        <li><a href="#contact" class="btn-primary">Get In Touch</a></li>
+      </ul>
+
+      <div class="hamburger" id="hamburger">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="about">
+    <div class="hero-content">
+      <div class="hero-slogan">
+        "Learn • Explore • Connect • Build • Innovate"
+      </div>
+      <h1>Empowering Futures Through <span class="highlight">Smart Tech</span> Solutions</h1>
+      <p>We are a full-spectrum digital transformation agency crafting bespoke Web Applications, Custom Software, Mobile Apps, and Enterprise Designs.</p>
+      <div class="hero-btns">
+        <a href="#services" class="btn-primary">Explore Services</a>
+        <a href="https://chat.whatsapp.com/EgsYKdeN0Ev5C0sTUdrict" class="btn-secondary">Join Community</a>
+      </div>
+    </div>
+
+    <div class="hero-3d-wrapper">
+      <div id="three-canvas"></div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services-section" id="services">
+    <div class="section-title reveal">
+      <h2>Engineering Excellence</h2>
+      <p>Customized, scalable, and intuitive digital solutions tailored for high performance.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fa-solid fa-code"></i></div>
+        <h3>Full-Stack Web Dev</h3>
+        <p>Responsive, lightning-fast web architecture using Modern JS Frameworks, ASP.NET Core, React, Next.js, and Node.js.</p>
+        <div class="service-tags">
+          <span class="service-tag">React</span>
+          <span class="service-tag">Next.js</span>
+          <span class="service-tag">ASP.NET</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+        <h3>Mobile App Dev</h3>
+        <p>Native & Cross-Platform iOS/Android mobile applications designed for seamless UX, speed, and peak usability.</p>
+        <div class="service-tags">
+          <span class="service-tag">Flutter</span>
+          <span class="service-tag">React Native</span>
+          <span class="service-tag">iOS/Android</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fa-solid fa-laptop-code"></i></div>
+        <h3>Desktop & Software</h3>
+        <p>Robust desktop software systems engineered for business process automation, security, and data analytics.</p>
+        <div class="service-tags">
+          <span class="service-tag">C# / .NET</span>
+          <span class="service-tag">Automation</span>
+          <span class="service-tag">Enterprise</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fa-solid fa-layer-group"></i></div>
+        <h3>UI/UX & Graphics</h3>
+        <p>Human-centered user experience design, visual wireframing, brand identity systems, and high-converting graphics.</p>
+        <div class="service-tags">
+          <span class="service-tag">Figma</span>
+          <span class="service-tag">Branding</span>
+          <span class="service-tag">Prototyping</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <h3>SEO & Digital Marketing</h3>
+        <p>Data-backed search engine optimization, technical site audits, and targeted digital marketing campaigns to maximize reach.</p>
+        <div class="service-tags">
+          <span class="service-tag">SEO</span>
+          <span class="service-tag">Rank Math</span>
+          <span class="service-tag">Growth</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <h3>Tech Mentorship</h3>
+        <p>Community learning initiatives helping aspiring developers master modern tech stacks, coding tools, and career roadmaps.</p>
+        <div class="service-tags">
+          <span class="service-tag">Community</span>
+          <span class="service-tag">Learning</span>
+          <span class="service-tag">Workshops</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Founders Section -->
+  <section class="founders-section" id="founders">
+    <div class="section-title reveal">
+      <h2>Founders & Leadership</h2>
+      <p>Driven by visionaries passionate about engineering impactful digital products.</p>
+    </div>
+
+    <div class="founders-grid">
+      <div class="founder-card reveal">
+        <div class="founder-avatar">CA</div>
+        <div class="founder-name">CH.M.Ahmed</div>
+        <div class="founder-role">Co-Founder & Chief Architect</div>
+        <div class="founder-bio">Specializing in Full-Stack Web Development, UI/UX Systems, and Enterprise Software Architecture.</div>
+        
+        <!-- Social Media Icons -->
+        <div class="founder-socials">
+          <a href="https://www.linkedin.com/in/ch-m-ahmad/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="https://www.instagram.com/chahmad.dev/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <div class="founder-card reveal">
+        <div class="founder-avatar">AW</div>
+        <div class="founder-name">Abdul Wahid</div>
+        <div class="founder-role">Co-Founder & Operations Director</div>
+        <div class="founder-bio">Leading Strategic Growth, Client Operations, and Digital Product Management.</div>
+        
+        <!-- Social Media Icons -->
+        <div class="founder-socials">
+             <a href="#" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="https://www.instagram.com/abdul.wahid10910/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WhatsApp Community Section -->
+  <section class="community-section reveal" id="community">
+    <h2>Join Tech X Sol Learning Hub</h2>
+    <p>Connect with expert developers, learn tech skills, get free project guidance, and innovate together inside our WhatsApp Community.</p>
+    <a href="https://chat.whatsapp.com/EgsYKdeN0Ev5C0sTUdrict" class="btn-whatsapp">
+      <i class="fa-brands fa-whatsapp" style="font-size: 22px;"></i> Join WhatsApp Community
+    </a>
+  </section>
+
+  <!-- Contact Us Section -->
+  <section class="contact-section" id="contact">
+    <div class="contact-container reveal">
+      <div class="contact-info">
+        <h3>Let's Build Something <span style="color: var(--accent-cyan);">Great</span> Together</h3>
+        <p>Have a project in mind, need custom software, or want to discuss a partnership? Get in touch with our team today.</p>
+
+        <div class="contact-details">
+          <div class="contact-item">
+            <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+            <div>
+              <h4>Email Us</h4>
+              <p>techxsol.official@gmail.com</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+            <div>
+              <h4>Call / WhatsApp</h4>
+              <p>+92 300 1277042</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div>
+              <h4>Location</h4>
+              <p>Sargodha / Punjab, Pakistan</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <form onsubmit="event.preventDefault(); alert('Message sent successfully!');">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" class="form-control" placeholder="Enter your full name" required>
+          </div>
+          <div class="form-group">
+            <label>Your Email</label>
+            <input type="email" class="form-control" placeholder="Enter your email address" required>
+          </div>
+          <div class="form-group">
+            <label>Project Details / Message</label>
+            <textarea class="form-control" placeholder="Tell us about your project requirements..." required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+         <a href="#" class="logo-brand">
+        <div class="logo-svg-wrapper">
+          <img src="techxsol logo.png" alt="Tech X Sol Logo">
+        </div>
+      </a>
+      <div class="footer-socials">
+    <a href="https://web.facebook.com/profile.php?id=61595036870450" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+        <i class="fa-brands fa-facebook-f"></i>
+    </a>
+
+    <a href="https://www.instagram.com/techxsol/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <i class="fa-brands fa-instagram"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/techxsol/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+        <i class="fa-brands fa-linkedin-in"></i>
+    </a>
+
+    <a href="https://www.tiktok.com/@techxsol" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+        <i class="fa-brands fa-tiktok"></i>
+    </a>
+</div>
+      <div class="footer-copy">
+        &copy; 2026 Tech X Sol. All Rights Reserved. Built with Precision & Care.
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Single Share Button -->
+  <button class="floating-share" id="shareButton" type="button" aria-label="Share Tech X Sol" title="Share Tech X Sol">
+    <i class="fa-solid fa-share-nodes"></i>
+  </button>
+  <div class="share-toast" id="shareToast">Link copied!</div>
+
+  <!-- Scripts -->
+  <script>
+
+    // Single Share Button
+    const shareButton = document.getElementById('shareButton');
+    const shareToast = document.getElementById('shareToast');
+
+    function showShareToast(message) {
+      shareToast.textContent = message;
+      shareToast.classList.add('show');
+      setTimeout(() => shareToast.classList.remove('show'), 1800);
+    }
+
+    shareButton.addEventListener('click', async () => {
+      const shareData = {
+        title: document.title,
+        text: 'Check out Tech X Sol',
+        url: window.location.href
+      };
+
+      try {
+        if (navigator.share) {
+          await navigator.share(shareData);
+        } else if (navigator.clipboard) {
+          await navigator.clipboard.writeText(window.location.href);
+          showShareToast('Link copied!');
+        } else {
+          showShareToast('Copy the website link from your browser.');
+        }
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          showShareToast('Share was cancelled.');
+        }
+      }
+    });
+
+    // Custom Dual Cursor FX
+    const cursorDot = document.querySelector('.cursor-dot');
+    const cursorOutline = document.querySelector('.cursor-outline');
+
+    window.addEventListener('mousemove', (e) => {
+      const posX = e.clientX;
+      const posY = e.clientY;
+
+      cursorDot.style.left = `${posX}px`;
+      cursorDot.style.top = `${posY}px`;
+
+      cursorOutline.animate({
+        left: `${posX}px`,
+        top: `${posY}px`
+      }, { duration: 250, fill: "forwards" });
+    });
+
+    // Hover Scaling for Cursor
+    document.querySelectorAll('a, button, .service-card, .founder-card, .contact-item').forEach(elem => {
+      elem.addEventListener('mouseenter', () => {
+        cursorOutline.style.width = '48px';
+        cursorOutline.style.height = '48px';
+        cursorOutline.style.borderColor = '#00C8FF';
+      });
+      elem.addEventListener('mouseleave', () => {
+        cursorOutline.style.width = '32px';
+        cursorOutline.style.height = '32px';
+        cursorOutline.style.borderColor = '#00A8E8';
+      });
+    });
+
+    // Scroll Reveal Intersection Observer
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('active');
+          }, index * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    reveals.forEach(reveal => revealObserver.observe(reveal));
+
+    // Three.js 3D Kinetic Mesh Engine
+    const container = document.getElementById('three-canvas');
+    const scene = new THREE.Scene();
+    
+    const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.z = 15;
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
+
+    // Outer Geometry Mesh
+    const geometry = new THREE.IcosahedronGeometry(4, 2);
+    const material = new THREE.MeshBasicMaterial({
+      color: 0x00A8E8,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.65
+    });
+
+    const sphere = new THREE.Mesh(geometry, material);
+    scene.add(sphere);
+
+    // Pulsing Inner Core
+    const coreGeo = new THREE.SphereGeometry(1.8, 16, 16);
+    const coreMat = new THREE.MeshBasicMaterial({
+      color: 0x0077B6,
+      wireframe: false
+    });
+    const core = new THREE.Mesh(coreGeo, coreMat);
+    scene.add(core);
+
+    // Mouse Interaction
+    let mouseX = 0, mouseY = 0;
+    document.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX / window.innerWidth) - 0.5;
+      mouseY = (e.clientY / window.innerHeight) - 0.5;
+    });
+
+    // Animation Loop
+    let clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+      let elapsedTime = clock.getElapsedTime();
+
+      sphere.rotation.x += 0.003;
+      sphere.rotation.y += 0.005;
+      core.rotation.y -= 0.008;
+
+      // Pulse Core Effect
+      let scale = 1 + Math.sin(elapsedTime * 2) * 0.08;
+      core.scale.set(scale, scale, scale);
+
+      // Smooth Parallax
+      sphere.rotation.x += mouseY * 0.015;
+      sphere.rotation.y += mouseX * 0.015;
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Resize Handler
+    window.addEventListener('resize', () => {
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+    // Mobile Hamburger Menu
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.querySelector('.nav-links');
+
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('mobile-active');
+});
+  </script>
+</body>
+</html>
