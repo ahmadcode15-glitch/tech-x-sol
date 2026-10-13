@@ -1,11 +1,11 @@
 {
   "name": "tech-x-sol",
   "version": "1.0.0",
-  "description": "Tech X Sol - Web, Software, Mobile & Digital Solutions Platform",
-  "main": "server.js",
+  "description": "Tech X Sol - Digital Platform",
+  "main": "backend/server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "start": "node backend/server.js",
+    "dev": "node backend/server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -13,16 +13,5 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.5"
-  },
-  "keywords": [
-    "techxsol",
-    "web",
-    "software",
-    "solutions",
-    "neon",
-    "vercel"
-  ],
-  "author": "Tech X Sol",
-  "license": "ISC"
+  }
 }
-

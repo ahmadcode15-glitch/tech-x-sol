@@ -1,11 +1,12 @@
 /**
- * Tech X Sol - Clean Architecture Express Application
- * Shared between local development (server.js) and Vercel serverless (api/index.js)
+ * Tech X Sol - Backend Express Application
+ * Serves frontend static files and API endpoints
  */
 
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '../.env') });
 require('dotenv').config();
 
 const db = require('./db/neon');
@@ -20,36 +21,40 @@ app.use(cors());
 app.use(express.json({ limit: '25mb' }));
 app.use(express.urlencoded({ extended: true, limit: '25mb' }));
 
-// Serve frontend static files across both local and Vercel environments
-app.use(express.static(path.join(__dirname, '..')));
-app.use(express.static(process.cwd()));
+// Static frontend paths
+const frontendPaths = [
+  path.resolve(__dirname, '../../frontend'),
+  path.resolve(__dirname, '../frontend'),
+  path.resolve(process.cwd(), 'frontend'),
+  path.resolve(process.cwd())
+];
 
-// Explicit root and page routes to prevent "Cannot GET /"
+frontendPaths.forEach(p => {
+  app.use(express.static(p));
+});
+
+// Explicit page handlers
 app.get('/', (req, res) => {
-  const file = path.join(process.cwd(), 'index.html');
-  res.sendFile(file, (err) => {
-    if (err) res.sendFile(path.join(__dirname, '../index.html'));
+  res.sendFile(path.resolve(__dirname, '../../frontend/index.html'), (err) => {
+    if (err) res.sendFile(path.resolve(process.cwd(), 'frontend/index.html'));
   });
 });
 
 app.get('/tools', (req, res) => {
-  const file = path.join(process.cwd(), 'tools.html');
-  res.sendFile(file, (err) => {
-    if (err) res.sendFile(path.join(__dirname, '../tools.html'));
+  res.sendFile(path.resolve(__dirname, '../../frontend/tools.html'), (err) => {
+    if (err) res.sendFile(path.resolve(process.cwd(), 'frontend/tools.html'));
   });
 });
 
 app.get('/blog', (req, res) => {
-  const file = path.join(process.cwd(), 'blog.html');
-  res.sendFile(file, (err) => {
-    if (err) res.sendFile(path.join(__dirname, '../blog.html'));
+  res.sendFile(path.resolve(__dirname, '../../frontend/blog.html'), (err) => {
+    if (err) res.sendFile(path.resolve(process.cwd(), 'frontend/blog.html'));
   });
 });
 
 app.get('/admin', (req, res) => {
-  const file = path.join(process.cwd(), 'admin.html');
-  res.sendFile(file, (err) => {
-    if (err) res.sendFile(path.join(__dirname, '../admin.html'));
+  res.sendFile(path.resolve(__dirname, '../../frontend/admin.html'), (err) => {
+    if (err) res.sendFile(path.resolve(process.cwd(), 'frontend/admin.html'));
   });
 });
 
@@ -120,4 +125,3 @@ app.get('/api/tools', (req, res) => {
 });
 
 module.exports = app;
-
