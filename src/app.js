@@ -20,8 +20,38 @@ app.use(cors());
 app.use(express.json({ limit: '25mb' }));
 app.use(express.urlencoded({ extended: true, limit: '25mb' }));
 
-// Serve frontend static files
+// Serve frontend static files across both local and Vercel environments
 app.use(express.static(path.join(__dirname, '..')));
+app.use(express.static(process.cwd()));
+
+// Explicit root and page routes to prevent "Cannot GET /"
+app.get('/', (req, res) => {
+  const file = path.join(process.cwd(), 'index.html');
+  res.sendFile(file, (err) => {
+    if (err) res.sendFile(path.join(__dirname, '../index.html'));
+  });
+});
+
+app.get('/tools', (req, res) => {
+  const file = path.join(process.cwd(), 'tools.html');
+  res.sendFile(file, (err) => {
+    if (err) res.sendFile(path.join(__dirname, '../tools.html'));
+  });
+});
+
+app.get('/blog', (req, res) => {
+  const file = path.join(process.cwd(), 'blog.html');
+  res.sendFile(file, (err) => {
+    if (err) res.sendFile(path.join(__dirname, '../blog.html'));
+  });
+});
+
+app.get('/admin', (req, res) => {
+  const file = path.join(process.cwd(), 'admin.html');
+  res.sendFile(file, (err) => {
+    if (err) res.sendFile(path.join(__dirname, '../admin.html'));
+  });
+});
 
 // Initialize Neon Database schema
 db.initDb();
